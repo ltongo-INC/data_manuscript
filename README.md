@@ -205,8 +205,9 @@ Trois parties prenantes du cas d'usage de planification urbaine (chapitre 5) :
 | Métadonnée | Type de source | Fichier / connexion |
 |---|---|---|
 | Réseau routier — Commune X | `database` | PostGIS (hôte, base, table, colonne géométrie fictifs — nécessite un serveur PostGIS réel) |
-| Réseau électrique souterrain — Commune X | `geojson` | `sample-datasets/reseau_electrique_communex.geojson` |
-| Parcelles cadastrales — Commune X | `shapefile` | `sample-datasets/parcelles_communex.shp` |
+| Réseau adduction d'eau potable— Commune X | `geojson` | `sample-datasets/aep.json` |
+| Parcelles cadastrales — Commune X | `shapefile` | `sample-datasets/esapce_urbains.json` |
+| Réseau routier — Commune X | `shapefile` | `sample-datasets/voiriepdu.json` |
 
 Un fichier `sample-datasets/points_interet_communex.csv` est également fourni
 pour couvrir la fonction `read_csv` de la bibliothèque GeoAPI.
