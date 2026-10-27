@@ -1,0 +1,40 @@
+dn: cn=geofederation,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: geofederation
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.1 NAME 'nomNoeud'
+  DESC 'Nom du noeud LDAP GeoFederation'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.2 NAME 'abreviationNoeud'
+  DESC 'Abreviation canonique du noeud (idinfo, dataqual, spref...)'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.3 NAME 'descriptionNoeud'
+  DESC 'Description libre du noeud'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.4 NAME 'valeurFeuille'
+  DESC 'Valeur effective portee par une entree Feuille'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.5 NAME 'titre'
+  DESC 'Titre du jeu de donnees decrit par la metadonnee'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcAttributeTypes: ( 1.3.6.1.4.1.99999.1.6 NAME 'typeSource'
+  DESC 'Type de source du jeu de donnees : database, geojson, shapefile, csv'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
+olcObjectClasses: ( 1.3.6.1.4.1.99999.2.1 NAME 'Noeud'
+  DESC 'Classe Noeud du modele GeoFederation (patron Composite)'
+  SUP top STRUCTURAL
+  MUST ( cn )
+  MAY ( nomNoeud $ abreviationNoeud $ descriptionNoeud $ description ) )
+olcObjectClasses: ( 1.3.6.1.4.1.99999.2.2 NAME 'Feuille'
+  DESC 'Classe Feuille du modele GeoFederation (patron Composite)'
+  SUP Noeud STRUCTURAL
+  MUST ( valeurFeuille ) )
+olcObjectClasses: ( 1.3.6.1.4.1.99999.2.3 NAME 'METADATA'
+  DESC 'Entree racine d une metadonnee canonique (fille de Noeud)'
+  SUP Noeud STRUCTURAL
+  MAY ( titre $ typeSource ) )

@@ -1,0 +1,48 @@
+# =============================================================================
+# docker-compose.yml - GeoFederation (annuaire OpenLDAP + backend/frontend)
+#
+# Usage (Windows, macOS, Linux - necessite Docker Desktop) :
+#   docker compose up -d --build
+#   -> application disponible sur http://localhost:4000
+#
+# Le schema LDAP personnalise et le jeu de donnees d'exemple sont charges
+# automatiquement au premier demarrage (dossier ./ldif-bootstrap monte dans
+# le conteneur openldap).
+# =============================================================================
+services:
+
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: geofed-ldap
+    command: ["--copy-service"]
+    environment:
+      LDAP_ORGANISATION: "GeoFederation"
+      LDAP_DOMAIN: "bloc_metadata.monde"
+      LDAP_ADMIN_PASSWORD: "admin123"
+      LDAP_TLS: "false"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+      - ./ldif-bootstrap:/container/service/slapd/assets/config/bootstrap/ldif/custom
+    ports:
+      - "389:389"
+    restart: unless-stopped
+
+  backend:
+    build: .
+    container_name: geofed-backend
+    depends_on:
+      - openldap
+    environment:
+      LDAP_URL: "ldap://openldap:389"
+      LDAP_RACINE: "dc=bloc_metadata,dc=monde"
+      LDAP_ADMIN_DN: "cn=admin,dc=bloc_metadata,dc=monde"
+      LDAP_ADMIN_PW: "admin123"
+      PORT: "4000"
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+volumes:
+  ldap_data:
+  ldap_config:

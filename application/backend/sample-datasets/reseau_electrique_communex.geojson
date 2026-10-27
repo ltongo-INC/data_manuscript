@@ -1,0 +1,30 @@
+{
+  "type": "FeatureCollection",
+  "name": "reseau_electrique_communex",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "id_cable": "MT-001", "tension_kv": 15, "etat": "en service" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[11.5170, 3.8470], [11.5178, 3.8478], [11.5186, 3.8482]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id_cable": "MT-002", "tension_kv": 15, "etat": "en service" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[11.5186, 3.8482], [11.5192, 3.8488], [11.5198, 3.8492]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id_cable": "BT-014", "tension_kv": 0.4, "etat": "maintenance programmee" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[11.5178, 3.8478], [11.5182, 3.8472]]
+      }
+    }
+  ]
+}

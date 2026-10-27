@@ -1,0 +1,19 @@
+{
+  "name": "geofederation-backend",
+  "version": "1.0.0",
+  "description": "Prototype applicatif GeoFederation - API REST (couches presentation, semantique, federation)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "express": "^4.19.2",
+    "ldapjs": "^3.0.7",
+    "leaflet": "^1.9.4",
+    "pg": "^8.12.0",
+    "shapefile": "^0.6.6"
+  }
+}

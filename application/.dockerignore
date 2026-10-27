@@ -1,0 +1,5 @@
+backend/node_modules
+ldif-bootstrap
+*.zip
+*.md
+.git

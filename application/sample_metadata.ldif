@@ -1,0 +1,162 @@
+# =============================================================================
+# Jeu de donnees d'exemple - Catalogue canonique GeoFederation
+# 3 parties prenantes du cas d'usage de planification urbaine (chapitre 5)
+# =============================================================================
+
+# -----------------------------------------------------------------------
+# 1) Reseau routier - Commune X (source : base de donnees PostGIS)
+# -----------------------------------------------------------------------
+dn: cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: METADATA
+cn: Metadata_ReseauRoutier_CommuneX
+titre: Reseau routier - Commune X, 2025
+typeSource: database
+
+dn: cn=idinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: idinfo
+nomNoeud: idinfo
+abreviationNoeud: idinfo
+
+dn: cn=title,cn=idinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: title
+valeurFeuille: Reseau routier - Commune X, 2025
+
+dn: cn=description,cn=idinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: description
+valeurFeuille: Troncons de voirie communale, leve topographique 2025
+
+dn: cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: distinfo
+nomNoeud: distinfo
+abreviationNoeud: distinfo
+
+dn: cn=hote,cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: hote
+valeurFeuille: geo.communex.example.org
+
+dn: cn=base,cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: base
+valeurFeuille: voirie
+
+dn: cn=table,cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: table
+valeurFeuille: troncons_routiers
+
+dn: cn=colonneGeometrie,cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: colonneGeometrie
+valeurFeuille: geom
+
+dn: cn=rights,cn=distinfo,cn=Metadata_ReseauRoutier_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: rights
+valeurFeuille: usage interne uniquement
+
+# -----------------------------------------------------------------------
+# 2) Reseau electrique souterrain (source : fichier GeoJSON)
+# -----------------------------------------------------------------------
+dn: cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: METADATA
+cn: Metadata_ReseauElectrique_CommuneX
+titre: Reseau electrique souterrain - Commune X, 2025
+typeSource: geojson
+
+dn: cn=idinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: idinfo
+nomNoeud: idinfo
+abreviationNoeud: idinfo
+
+dn: cn=title,cn=idinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: title
+valeurFeuille: Reseau electrique souterrain - Commune X, 2025
+
+dn: cn=description,cn=idinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: description
+valeurFeuille: Cables moyenne tension, releve operateur 2025
+
+dn: cn=distinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: distinfo
+nomNoeud: distinfo
+abreviationNoeud: distinfo
+
+dn: cn=fichier,cn=distinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: fichier
+valeurFeuille: reseau_electrique_communex.geojson
+
+dn: cn=rights,cn=distinfo,cn=Metadata_ReseauElectrique_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: rights
+valeurFeuille: partage restreint aux parties prenantes de la federation
+
+# -----------------------------------------------------------------------
+# 3) Parcelles cadastrales (source : fichier Shapefile)
+# -----------------------------------------------------------------------
+dn: cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: METADATA
+cn: Metadata_Cadastre_CommuneX
+titre: Parcelles cadastrales - Commune X, 2025
+typeSource: shapefile
+
+dn: cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: idinfo
+nomNoeud: idinfo
+abreviationNoeud: idinfo
+
+dn: cn=title,cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: title
+valeurFeuille: Parcelles cadastrales - Commune X, 2025
+
+dn: cn=description,cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: description
+valeurFeuille: Limites parcellaires, administration cadastrale, mise a jour 2025
+
+dn: cn=distinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Noeud
+cn: distinfo
+nomNoeud: distinfo
+abreviationNoeud: distinfo
+
+dn: cn=fichier,cn=distinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: fichier
+valeurFeuille: parcelles_communex.shp
+
+dn: cn=rights,cn=distinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: rights
+valeurFeuille: diffusion soumise a autorisation prealable
+
+dn: cn=distributionLink,cn=distinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: distributionLink
+valeurFeuille: https://geo.communex.example.org/catalogue/cadastre-communex
+
+dn: cn=keywords,cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: keywords
+valeurFeuille: cadastre, foncier, parcelles, commune X
+
+dn: cn=creator,cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: creator
+valeurFeuille: Service du cadastre - Commune X
+
+dn: cn=resourceType,cn=idinfo,cn=Metadata_Cadastre_CommuneX,dc=bloc_metadata,dc=monde
+objectClass: Feuille
+cn: resourceType
+valeurFeuille: vector

@@ -1,0 +1,105 @@
+/* =============================================================================
+   style.css - mise en page de la page d'accueil GeoFederation
+   - #mise-en-page : grille 4fr (colonne-principale) / 1fr (panneau-resultats)
+   - Le Viewer occupe le centre de la colonne principale, sous le formulaire.
+   ============================================================================= */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #1b2a4a;
+  background: #f4f6f8;
+}
+
+#entete {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 20px;
+  background: #1b2a4a;
+  color: white;
+}
+#entete h1 { font-size: 1.2rem; margin: 0; }
+#racine-annuaire { font-size: 0.8rem; color: #cfe0f5; }
+
+/* --- Grille principale : 4/5 (viewer + formulaire) / 1/5 (resultats) --- */
+#mise-en-page {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  height: calc(100vh - 46px);
+}
+
+#colonne-principale {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#panneau-resultats {
+  background: white;
+  border-left: 1px solid #d5dbe0;
+  padding: 12px;
+  overflow-y: auto;
+}
+#panneau-resultats h2 { font-size: 1rem; margin-top: 0; }
+#liste-resultats { list-style: none; margin: 0; padding: 0; }
+#liste-resultats li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 4px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+}
+#liste-resultats li .puce-couleur {
+  width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0;
+}
+#liste-resultats li.indisponible { opacity: 0.55; }
+
+/* --- Formulaire de metadonnees --- */
+#formulaire-metadonnees {
+  background: white;
+  border-bottom: 1px solid #d5dbe0;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+}
+#formulaire-metadonnees fieldset { border: none; margin: 0; padding: 0; }
+#formulaire-metadonnees legend { font-weight: bold; color: #2e5fa3; padding: 0; }
+.ligne { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0; }
+.ligne label { display: flex; flex-direction: column; font-size: 0.78rem; color: #5d6d7e; gap: 2px; }
+.ligne label.large { flex: 1 1 100%; }
+.ligne input, .ligne select {
+  padding: 5px 7px; border: 1px solid #c9d2da; border-radius: 4px; font-size: 0.85rem; min-width: 180px;
+}
+details summary { cursor: pointer; color: #2e5fa3; font-size: 0.8rem; margin: 6px 0; }
+.boutons { align-items: center; }
+.boutons button {
+  padding: 7px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.85rem;
+}
+#btn-inserer { background: #0f6e56; color: white; }
+#btn-rechercher { background: #2e5fa3; color: white; }
+#message-formulaire { font-size: 0.8rem; color: #5d6d7e; }
+
+/* --- Viewer --- */
+#conteneur-viewer { flex: 1; position: relative; min-height: 0; }
+#viewer { width: 100%; height: 100%; }
+
+/* Icones d'outils personnalisees du Viewer (fond de carte, mesure) */
+.outil-viewer {
+  background: white;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+}
+.outil-viewer:hover { background: #eef3fa; }
+.outil-viewer.actif { background: #2e5fa3; color: white; }
+
+.popup-metadonnees h3 { margin: 0 0 6px 0; font-size: 0.9rem; color: #2e5fa3; }
+.popup-metadonnees table { font-size: 0.78rem; border-collapse: collapse; }
+.popup-metadonnees td { padding: 2px 6px 2px 0; vertical-align: top; }
+.popup-metadonnees td.cle { color: #5d6d7e; white-space: nowrap; }

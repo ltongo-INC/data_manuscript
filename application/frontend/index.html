@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GeoFederation — Prototype applicatif</title>
+
+<!-- Leaflet (bibliotheque cartographique du Viewer, cf. these chapitre 6 -
+     "Le module Viewer peut etre developpe en JavaScript ou au moyen de
+     bibliotheques cartographiques etablies telles que Leaflet ou
+     OpenLayers"). Servi localement (vendor/) pour un deploiement
+     autonome, sans dependance a un CDN externe. -->
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<script src="vendor/leaflet/leaflet.js"></script>
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header id="entete">
+    <h1>GeoFederation</h1>
+    <span id="racine-annuaire">Racine du catalogue : …</span>
+  </header>
+
+  <!-- ======================================================================
+       Mise en page principale : grille 4fr / 1fr
+       - Colonne de gauche (4/5) : formulaire de metadonnees + Viewer
+       - Colonne de droite (1/5) : panneau des resultats de recherche
+       ==================================================================== -->
+  <main id="mise-en-page">
+
+    <!-- ---------------- Colonne gauche (4/5) ---------------- -->
+    <section id="colonne-principale">
+
+      <!-- Formulaire de recherche / enregistrement des metadonnees.
+           Ses entrees reprennent desormais exactement les 13 "Canonical
+           Field" de la table de correspondance ISO 19115 / CSDGM / Dublin
+           Core du chapitre 4 : Identifier, Title, Description, Keywords,
+           Creator, Publisher, Date created, Date issued, Date modified,
+           Resource type, Rights, Spatial coverage, Distribution link.
+           Les parametres de connexion technique (necessaires a la
+           bibliotheque GeoAPI pour recuperer effectivement la donnee) sont
+           regroupes a part : ils ne font pas partie de la table de
+           correspondance mais restent indispensables au fonctionnement du
+           Builder (voir federation/geoApi.js). Un seul formulaire sert aux
+           deux operations (insertion et recherche). -->
+      <form id="formulaire-metadonnees" autocomplete="off">
+        <fieldset>
+          <legend>Métadonnées canoniques</legend>
+
+          <div class="ligne">
+            <label>Identifier
+              <input type="text" name="identifier" placeholder="ReseauRoutier_CommuneX_2025" required />
+            </label>
+            <label>Type de source
+              <select name="typeSource">
+                <option value="geojson">geojson</option>
+                <option value="shapefile">shapefile</option>
+                <option value="csv">csv</option>
+                <option value="database">database (PostGIS)</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="ligne">
+            <label class="large">Title
+              <input type="text" name="idinfo.title" placeholder="Réseau routier — Commune X, 2025" />
+            </label>
+          </div>
+          <div class="ligne">
+            <label class="large">Description
+              <input type="text" name="idinfo.description" placeholder="Description du jeu de données" />
+            </label>
+          </div>
+          <div class="ligne">
+            <label class="large">Keywords
+              <input type="text" name="idinfo.keywords" placeholder="voirie, transport, commune X" />
+            </label>
+          </div>
+          <div class="ligne">
+            <label>Creator
+              <input type="text" name="idinfo.creator" placeholder="Direction technique - Commune X" />
+            </label>
+            <label>Publisher
+              <input type="text" name="idinfo.publisher" placeholder="Commune X" />
+            </label>
+            <label>Resource type
+              <input type="text" name="idinfo.resourceType" placeholder="vector / raster / service" />
+            </label>
+          </div>
+
+          <details open>
+            <summary>Dates et couverture</summary>
+            <div class="ligne">
+              <label>Date created
+                <input type="date" name="idinfo.dateCreated" />
+              </label>
+              <label>Date issued
+                <input type="date" name="idinfo.dateIssued" />
+              </label>
+              <label>Date modified
+                <input type="date" name="metainfo.dateModified" />
+              </label>
+            </div>
+            <div class="ligne">
+              <label class="large">Spatial coverage
+                <input type="text" name="spref.spatialCoverage" placeholder="11.510,3.840,11.525,3.855 (xmin,ymin,xmax,ymax)" />
+              </label>
+            </div>
+          </details>
+
+          <details open>
+            <summary>Droits et diffusion</summary>
+            <div class="ligne">
+              <label class="large">Rights
+                <input type="text" name="distinfo.rights" placeholder="usage interne uniquement" />
+              </label>
+            </div>
+            <div class="ligne">
+              <label class="large">Distribution link
+                <input type="text" name="distinfo.distributionLink" placeholder="https://geo.communex.example.org/catalogue/..." />
+              </label>
+            </div>
+          </details>
+
+          <details>
+            <summary>Paramètres de connexion (technique, hors table canonique — requis par GeoAPI)</summary>
+
+            <div class="ligne" data-groupe-connexion="fichier">
+              <label class="large">Fichier (geojson / shapefile / csv)
+                <input type="text" name="distinfo.fichier" placeholder="reseau_electrique_communex.geojson" />
+              </label>
+            </div>
+            <div class="ligne" data-groupe-connexion="database">
+              <label>Hôte
+                <input type="text" name="distinfo.hote" placeholder="geo.communex.example.org" />
+              </label>
+              <label>Base
+                <input type="text" name="distinfo.base" placeholder="voirie" />
+              </label>
+              <label>Table
+                <input type="text" name="distinfo.table" placeholder="troncons_routiers" />
+              </label>
+              <label>Colonne géométrie
+                <input type="text" name="distinfo.colonneGeometrie" placeholder="geom" />
+              </label>
+            </div>
+          </details>
+
+          <div class="ligne boutons">
+            <button type="submit" id="btn-inserer">Insérer</button>
+            <button type="button" id="btn-rechercher">Rechercher</button>
+            <span id="message-formulaire"></span>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- Viewer cartographique -->
+      <div id="conteneur-viewer">
+        <div id="viewer"></div>
+      </div>
+    </section>
+
+    <!-- ---------------- Colonne droite (1/5) : résultats ---------------- -->
+    <aside id="panneau-resultats">
+      <h2>Résultats</h2>
+      <ul id="liste-resultats"></ul>
+    </aside>
+
+  </main>
+
+  <!-- Popup de métadonnées affiché au clic droit sur une entité du Viewer -->
+  <script src="app.js"></script>
+</body>
+</html>
